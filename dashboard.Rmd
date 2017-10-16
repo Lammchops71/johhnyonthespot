@@ -1,0 +1,31 @@
+---
+title: "Johnny's Juicy Joyful Dashboard"
+output: 
+  flexdashboard::flex_dashboard:
+    orientation: columns
+    vertical_layout: fill
+---
+
+```{r setup, include=FALSE}
+library(flexdashboard)
+library(sqldf)
+library(Lahman)
+library(ggplot2)
+```
+
+Column {data-width=650}
+-----------------------------------------------------------------------
+
+###Johnny's Juicy Joyful Dashboard
+
+```{r}
+query<-"SELECT HR, playerID, yearID, SO from Batting
+WHERE HR>50 and SO<75"
+result<-sqldf(query)
+
+ggplot()+
+  geom_point(data=result, aes(x=HR, y=SO), color="dark green", size=12)+
+  xlab("Homeruns")+
+  ylab("Strikeouts")+
+  ggtitle("Johhny's Birthday")
+```
